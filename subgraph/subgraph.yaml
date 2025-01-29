@@ -1,0 +1,27 @@
+specVersion: 0.0.5
+description: "DAO Governance Subgraph"
+repository: https://github.com/yourusername/dao-protocol
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Governance
+    network: goerli
+    source:
+      address: "0xYourGovernanceContractAddress"
+      abi: Governance
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Proposal
+        - Vote
+      abis:
+        - name: Governance
+          file: ./abis/Governance.json
+      eventHandlers:
+        - event: ProposalCreated(indexed bytes32,address,string,uint256,uint256)
+          handler: handleProposalCreated
+        - event: VoteCast(indexed address,uint256,bool,uint256)
+          handler: handleVoteCast

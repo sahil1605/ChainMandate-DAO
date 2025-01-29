@@ -1,0 +1,14 @@
+{
+    "dependencies": {
+      "react": "^18.2.0",
+      "ethers": "^6.7.0",
+      "@apollo/client": "^3.7.10",
+      "graphql": "^16.6.0",
+      "zustand": "^4.3.0",
+      "@chakra-ui/react": "^2.6.1",
+      "swr": "^2.1.5",
+      "react-hook-form": "^7.43.0",
+      "luxon": "^3.3.0",
+      "web3modal": "^1.9.10"
+    }
+  }

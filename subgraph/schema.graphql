@@ -1,0 +1,19 @@
+entity Proposal {
+    id: ID!
+    proposer: Bytes!
+    targets: [Bytes!]!
+    values: [BigInt!]!
+    description: String!
+    voteStart: BigInt!
+    voteEnd: BigInt!
+    executed: Boolean!
+    votes: [Vote!]! @derivedFrom(field: "proposal")
+  }
+  
+  entity Vote {
+    id: ID!
+    voter: Bytes!
+    support: Boolean!
+    weight: BigInt!
+    proposal: Proposal!
+  }

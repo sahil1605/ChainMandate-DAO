@@ -1,0 +1,33 @@
+name: DAO Protocol CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm ci
+      - run: npx hardhat test
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Slither
+        uses: crytic/slither-action@v0.2.0
+
+  deploy:
+    needs: [test, security]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm ci
+      - run: npx hardhat run scripts/deploy.js --network goerli
+        env:
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_KEY }}
+          INFURA_KEY: ${{ secrets.INFURA_KEY }}
